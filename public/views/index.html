@@ -6,10 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Bootstrap -->
-    <link href="styles/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/css/bootstrap.min.css.map">
+    <!-- Optional Bootstrap theme -->
+    <link rel="stylesheet" href="styles/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="styles/css/bootstrap-theme.min.css.map">
     <!-- css -->
     <link rel="stylesheet" href="styles/main.css">
 
+    <!-- jQuery and JavaScript -->
     <script src="vendors/jquery-3.2.1.min.js"></script>
     <script src="scripts/client.js"></script>
 
@@ -20,7 +25,37 @@
         <h1>To-Do</h1>
     </header>
     <main>
+        <section class="container" id="inputSection">
+            <div class="form-group">
+                <lable>Task Name</lable>
+                <input type="text" class="form-control" id="nameInput" placeholder="Give your task a name!">
+                <lable>Description</lable>
+                <textarea class="form-control" rows="5"id="descriptionInput" placeholder="Details about what needs to be done."></textarea>
+                <lable>Due Date</lable>
+                <input class="form-control" type="datetime-local" id="dueInput" placeholder="Due Date">
+            </div>
+            <button class="btn-primary" id="addTaskButton">Create Task</button>
+        </section>
+        <section class="container" id="outputSection">
+            <div class="table-responsive">
+                <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                        <th>Created</th>
+                        <th>Completed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+                </table>
+            </div>
 
+        </section>
     </main>
     <footer>
 
