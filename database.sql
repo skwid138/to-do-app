@@ -6,7 +6,7 @@ CREATE TABLE tasks (
 	name VARCHAR(30),
 	description VARCHAR(200),
 	status BOOLEAN DEFAULT false,
-	due TIMESTAMP,
-	created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	completed TIMESTAMP
+	due VARCHAR(10),
+	created DATE DEFAULT CURRENT_DATE,
+	completed DATE
 );
