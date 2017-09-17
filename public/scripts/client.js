@@ -11,7 +11,7 @@ function onReady( ) {
     // listeners
     $('#addTaskButton').on('click', addTask);
     $('tbody').on('click', '.completeButton', updateTask);
-    $('tbody').on('click', '.deleteButton', deleteTask);
+    $('tbody').on('click', '.deleteButton', deleteDialog);
 
     // GETs tasks and Displays them
     getTasks();
@@ -97,10 +97,35 @@ function completeTaskDate( ) {
     return date;
 } // end completeTask
 
-// removes row from DB and displays current DB rows
-function deleteTask( ) {
-    if(doLog) console.log('in deleteTask');
+// confirms user actions
+function deleteDialog( ) {
+    if(noLog) console.log('in deleteDialog');
     var taskId = $(this).parent().parent().data('id');
+    if(noLog) console.log('deleteDialog id ->', taskId);
+    BootstrapDialog.show({
+        message: 'Are you sure you want to delete that task?',
+        buttons: [{
+            label: 'Delete',
+            action: function (dialogItself) {
+                if(noLog) console.log('action taskId ->', taskId);
+                deleteTask(taskId); // deletes task
+                dialogItself.close(); // closes dialog
+            }, // end action
+            cssClass: 'btn-warning'
+        },{
+            label: 'Cancel',
+            action: function (dialogItself) {
+                dialogItself.close();  // closes dialog
+            }, // end action
+            cssClass: 'btn-info'
+        }] // end buttons
+    }); // end BootstrapDialog
+} // end deleteDialog
+
+// removes row from DB and displays current DB rows
+function deleteTask( taskId) {
+    if(noLog) console.log('in deleteTask');
+    // var taskId = $(this).parent().parent().data('id');
     $.ajax({
         method: 'DELETE',
         url: '/task/' + taskId,
@@ -146,12 +171,12 @@ function sortTasks(tasks) {
             toDoTasks.unshift(tasks[i]);
         } // end else
     } // end for
-    for (var i = 0; i < toDoTasks.length; i++) {
-        sortedTasks.push(toDoTasks[i]); // sorts newest tasks first
+    for (var j = 0; j < toDoTasks.length; j++) {
+        sortedTasks.push(toDoTasks[j]); // sorts newest tasks first
     } // end for
-    for (var i = 0; i < completedTasks.length; i++) {
-        sortedTasks.push(completedTasks[i]);
-    } // end for
+    for (var l = 0; l < completedTasks.length; l++) {
+        sortedTasks.push(completedTasks[l]);
+    } // end for    
     if(noLog) console.log('sortedTasks', sortedTasks);
     return sortedTasks;
 } // end sortTasks
