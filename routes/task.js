@@ -91,7 +91,7 @@ router.delete('/:id', function(req, res){
             res.sendStatus(500);
             done();
         } else {
-            var queryString = '';
+            var queryString = 'DELETE FROM tasks WHERE id=$1';
             var values = [taskId];
             client.query(queryString, values, function(queryErr, resObj) {
                 if(queryErr) {

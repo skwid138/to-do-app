@@ -100,7 +100,15 @@ function completeTaskDate( ) {
 // removes row from DB and displays current DB rows
 function deleteTask( ) {
     if(doLog) console.log('in deleteTask');
-
+    var taskId = $(this).parent().parent().data('id');
+    $.ajax({
+        method: 'DELETE',
+        url: '/task/' + taskId,
+        success: function(res) {
+            if(doLog) console.log('DELETE success response ->', res);
+            getTasks();
+        } // end success
+    }); // end ajax
 } // end deleteTask
 
 // clears input fields
