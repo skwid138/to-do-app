@@ -70,10 +70,10 @@ router.put('/:id', function(req, res) {
             var values = [taskId, completed];
             client.query(queryString, values, function(queryErr, resObj){
                 if (queryErr) {
-                    console.log('Query Error ->', queryErr);
+                    console.log('Query PUT Error ->', queryErr);
                     res.sendStatus(500);
                 } else {
-                    res.sendStatus(202);
+                    res.sendStatus(201);
                 } // end else
                 done();
             }); // end query
@@ -82,6 +82,28 @@ router.put('/:id', function(req, res) {
 }); // end PUT
 
 // Delete remove row from db and respond with accepted
+router.delete('/:id', function(req, res){
+    console.log('in DELETE task route');
+    var taskId = req.params.id;
+    pool.connect(function(err, client, done) {
+        if(err) {
+            console.log('DELETE connection error ->', err);
+            res.sendStatus(500);
+            done();
+        } else {
+            var queryString = '';
+            var values = [taskId];
+            client.query(queryString, values, function(queryErr, resObj) {
+                if(queryErr) {
+                    console.log('Query DELETE Error ->', queryErr);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(202);
+                } // end else
+            }); // end query
+        } // end else
+    }); // end connect
+}); // end DELETE
 
 // export
 module.exports = router;
