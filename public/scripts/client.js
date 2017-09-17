@@ -25,10 +25,34 @@ function addTask( ) {
         data: taskToSend,
         success: function( res ) {
             if(doLog) console.log('addTask success response ->', res);
-            // getTasks(); func call
+            emptyInputs();
+            getTasks();
         } // end success
     }); // end ajax
 } // end addTask func
+
+// run through GET response, clear the DOM and append data
+function appendTasks(res) {
+    if(doLog) console.log('In appendTasks');
+    var $tbody = $('tbody');
+    $tbody.empty();
+    for (var i = 0; i < res.length; i++) {
+        var $tr = $('<tr>');
+        $tr.data('id', res[i].id); // sets primary key as data-id
+        $tr.append('<td>' + res[i].name);
+        $tr.append('<td>' + res[i].description);
+        if (res[i].status) {
+            $tr.append('<td><button class="finishedButton disabled btn-success">Complete</button></td>');
+        } else {
+            $tr.append('<td><button class="completeButton btn-warning">Complete</button></td>');
+        }
+        $tr.append('<td>' + res[i].due); // may need an if null put X
+        $tr.append('<td>' + res[i].created);
+        $tr.append('<td>' + res[i].completed); // may need an if null put X
+        $tr.append('<td><button class="deleteButton btn-danger">Delete</button></td>')
+        $tbody.append($tr); // appends row to table body
+    }
+}
 
 // Builds an object for addTask func
 function buildTaskObject( ) {
@@ -49,7 +73,9 @@ function buildTaskObject( ) {
 
 // clears input fields
 function emptyInputs( ) {
-    // this could be put inside buildTaskObject func I think
+    $('#nameInput').val('');
+    $('#descriptionInput').val('');
+    $('#dueInput').val('');
 } // end emptyInputs func
 
 // GET all tasks from Server
@@ -58,8 +84,8 @@ function getTasks( ) {
     $.ajax({
         method: 'GET',
         url: '/task',
-        success: function( ) { 
-
+        success: function(res) { 
+            appendTasks(res);
         } // end success
     }); // end ajax
     
