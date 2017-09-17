@@ -82,7 +82,7 @@ function buildTaskObject( ) {
     return task;
 } // end buildTaskObject func
 
-// 
+// generates yyyy-mm-dd for task completion
 function completeTaskDate( ) {
     if(doLog) console.log('in completeTask');
     var year = new Date().getFullYear();
@@ -124,11 +124,37 @@ function getTasks( ) {
     $.ajax({
         method: 'GET',
         url: '/task',
-        success: function(res) { 
-            appendTasks(res);
+        success: function(res) {
+            var tasks = sortTasks(res); 
+            appendTasks(tasks);
         } // end success
     }); // end ajax
 } // end getTasks func
+
+// sorts tasks based on completion status
+function sortTasks(tasks) {
+    if(noLog) console.log('in sortTasks');
+    if(noLog) console.log('tasks param', tasks);
+    var completedTasks = []; // array for all completed tasks
+    var toDoTasks = []; // array for all uncompleted tasks
+    var sortedTasks = []; // array sorted with completed tasks last
+    for (var i = 0; i < tasks.length; i++) {
+        if(noLog) console.log('for tasks[i]', tasks[i]);
+        if(tasks[i].status) {
+            completedTasks.push(tasks[i]);
+        } else {
+            toDoTasks.push(tasks[i]);
+        } // end else
+    } // end for
+    for (var i = 0; i < toDoTasks.length; i++) {
+        sortedTasks.push(toDoTasks[i])
+    } // end for
+    for (var i = 0; i < completedTasks.length; i++) {
+        sortedTasks.push(completedTasks[i]);
+    } // end for
+    if(noLog) console.log('sortedTasks', sortedTasks);
+    return sortedTasks;
+} // end sortTasks
 
 // may add ability to edit all row data, which would require a refactor
 // tells the server to change the status of the task to true and sets the completion date
