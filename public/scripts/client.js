@@ -45,7 +45,7 @@ function appendTasks(res) {
         $tr.append('<td>' + res[i].name);
         $tr.append('<td>' + res[i].description);
         if (res[i].status) {
-            $tr.append('<td><button class="finishedButton disabled btn-success">Complete</button></td>');
+            $tr.append('<td><button class="finishedButton btn disabled">Completed</button></td>');
         } else {
             $tr.append('<td><button class="completeButton btn-warning">Complete</button></td>');
         }
@@ -141,13 +141,13 @@ function sortTasks(tasks) {
     for (var i = 0; i < tasks.length; i++) {
         if(noLog) console.log('for tasks[i]', tasks[i]);
         if(tasks[i].status) {
-            completedTasks.push(tasks[i]);
+            completedTasks.unshift(tasks[i]);
         } else {
-            toDoTasks.push(tasks[i]);
+            toDoTasks.unshift(tasks[i]);
         } // end else
     } // end for
     for (var i = 0; i < toDoTasks.length; i++) {
-        sortedTasks.push(toDoTasks[i])
+        sortedTasks.push(toDoTasks[i]); // sorts newest tasks first
     } // end for
     for (var i = 0; i < completedTasks.length; i++) {
         sortedTasks.push(completedTasks[i]);
