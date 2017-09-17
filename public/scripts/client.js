@@ -107,10 +107,20 @@ function getTasks( ) {
     }); // end ajax
 } // end getTasks func
 
-// 
+// tells the server to change the status of the task to true
+// may add ability to edit all row data, which would require a refactor and use of data?
 function updateTask( ) {
     if(doLog) console.log('in updateTask');
-    
+    var taskId = $(this).parent().parent().data('id');
+    if(noLog) console.log('taskId ->', taskId);
+    $.ajax({
+        method: 'PUT',
+        url: '/task/' + taskId,
+        success: function(res) {
+            if(doLog) console.log('PUT successful');
+            getTasks();
+        } // end success
+    }); // end ajax
 } // end updateTask
 
 $(document).ready(onReady);
