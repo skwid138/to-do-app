@@ -59,14 +59,15 @@ router.post('/', function(req, res) {
 router.put('/:id', function(req, res) {
     console.log('in PUT task route');
     var taskId = req.params.id;
+    var completed = req.body.completed;
     pool.connect(function(err, client, done) {
         if(err) {
             console.log('PUT connection error ->', err);
             res.sendStatus(500);
             done();
         } else {
-            var queryString = "Update tasks SET status='true' WHERE id=$1";
-            var values = [taskId];
+            var queryString = "UPDATE tasks SET status='true', completed=$2 WHERE id=$1";
+            var values = [taskId, completed];
             client.query(queryString, values, function(queryErr, resObj){
                 if (queryErr) {
                     console.log('Query Error ->', queryErr);

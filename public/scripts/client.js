@@ -49,8 +49,8 @@ function appendTasks(res) {
         } else {
             $tr.append('<td><button class="completeButton btn-warning">Complete</button></td>');
         }
-        if (res[i].due === null) {
-            $tr.append('<td> N/A </td>');
+        if (res[i].due === null || res[i].due === '') {
+            $tr.append('<td>None</td>');
         } else {
             $tr.append('<td>' + res[i].due.slice(0,10));
         }
@@ -82,6 +82,21 @@ function buildTaskObject( ) {
     return task;
 } // end buildTaskObject func
 
+// 
+function completeTaskDate( ) {
+    if(doLog) console.log('in completeTask');
+    var year = new Date().getFullYear();
+    var day = new Date().getDate();
+    var zero = '0';
+    var month = (new Date().getMonth()) + 1;
+    month = month.toString();
+    if(month.length === 1) {
+        month = zero.concat(month);
+    }
+    var date = year + '-' + month + '-' + day;
+    return date;
+} // end completeTask
+
 // removes row from DB and displays current DB rows
 function deleteTask( ) {
     if(doLog) console.log('in deleteTask');
@@ -107,15 +122,19 @@ function getTasks( ) {
     }); // end ajax
 } // end getTasks func
 
-// tells the server to change the status of the task to true
-// may add ability to edit all row data, which would require a refactor and use of data?
-function updateTask( ) {
+// may add ability to edit all row data, which would require a refactor
+// tells the server to change the status of the task to true and sets the completion date
+function updateTask() {
     if(doLog) console.log('in updateTask');
     var taskId = $(this).parent().parent().data('id');
+    var dateToSend = {
+        completed: completeTaskDate()
+    };
     if(noLog) console.log('taskId ->', taskId);
     $.ajax({
         method: 'PUT',
         url: '/task/' + taskId,
+        data: dateToSend,
         success: function(res) {
             if(doLog) console.log('PUT success response ->', res);
             getTasks();
