@@ -117,7 +117,7 @@ function updateTask( ) {
         method: 'PUT',
         url: '/task/' + taskId,
         success: function(res) {
-            if(doLog) console.log('PUT successful');
+            if(doLog) console.log('PUT success response ->', res);
             getTasks();
         } // end success
     }); // end ajax
