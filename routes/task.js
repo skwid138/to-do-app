@@ -40,7 +40,7 @@ router.post('/', function(req, res) {
             res.sendStatus(500);
             done();
         } else {
-            var queryString = 'INSERT INTO tasks(name, description, due) VALUES (1$, 2$, 3$)'; // not sure the $ values should be comma separated
+            var queryString = 'INSERT INTO tasks(name, description, due) VALUES ($1, $2, $3)';
             var values = [name, description, due];
             client.query(queryString, values, function (queryErr, resObj) {
                 if(queryErr) {

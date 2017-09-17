@@ -37,6 +37,7 @@ function appendTasks(res) {
     var $tbody = $('tbody');
     $tbody.empty();
     for (var i = 0; i < res.length; i++) {
+        if(doLog) console.log('res[i] ->', res[i]);
         var $tr = $('<tr>');
         $tr.data('id', res[i].id); // sets primary key as data-id
         $tr.append('<td>' + res[i].name);
@@ -46,13 +47,21 @@ function appendTasks(res) {
         } else {
             $tr.append('<td><button class="completeButton btn-warning">Complete</button></td>');
         }
-        $tr.append('<td>' + res[i].due); // may need an if null put X
-        $tr.append('<td>' + res[i].created);
-        $tr.append('<td>' + res[i].completed); // may need an if null put X
+        if (res[i].due === null) {
+            $tr.append('<td> N/A </td>');
+        } else {
+            $tr.append('<td>' + res[i].due.slice(0,10));
+        }
+        $tr.append('<td>' + res[i].created.slice(0, 10));
+        if (res[i].completed === null) {
+            $tr.append('<td>Not Completed</td>');
+        } else {
+            $tr.append('<td>' + res[i].completed.slice(0, 10));
+        }
         $tr.append('<td><button class="deleteButton btn-danger">Delete</button></td>')
         $tbody.append($tr); // appends row to table body
-    }
-}
+    } // end for
+} // end appendTasks
 
 // Builds an object for addTask func
 function buildTaskObject( ) {
@@ -88,17 +97,6 @@ function getTasks( ) {
             appendTasks(res);
         } // end success
     }); // end ajax
-    
-    // sets value to current date and time (goes with borrowed code) only works for date not time
-    // $('#dueInput').val(new Date().toDateInputValue());
 } // end getTasks func
-
-// borrowed this code from
-// https://stackoverflow.com/questions/6982692/html5-input-type-date-default-value-to-today
-// Date.prototype.toDateInputValue = (function () {
-//     var local = new Date(this);
-//     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-//     return local.toJSON().slice(0, 10);
-// });
 
 $(document).ready(onReady);

@@ -6,13 +6,13 @@ var bodyParser = require('body-parser');
 var app = express();
 var port = 5000;
 
-// route requires
-var indexRouter = require('./routes/index');
-var taskRouter = require('./routes/task');
-
 // module use
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
+
+// route requires
+var indexRouter = require('./routes/index');
+var taskRouter = require('./routes/task');
 
 // routes
 app.use('/', indexRouter);
