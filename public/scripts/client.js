@@ -47,7 +47,7 @@ function appendTasks(res) {
         if (res[i].status) {
             $tr.append('<td><button class="finishedButton btn disabled">Completed</button></td>');
         } else {
-            $tr.append('<td><button class="completeButton btn-warning">Complete</button></td>');
+            $tr.append('<td><button class="completeButton btn btn-warning">Complete</button></td>');
         }
         if (res[i].due === null || res[i].due === '') {
             $tr.append('<td>None</td>');
@@ -60,7 +60,7 @@ function appendTasks(res) {
         } else {
             $tr.append('<td>' + res[i].completed.slice(0, 10));
         }
-        $tr.append('<td><button class="deleteButton btn-danger">Delete</button></td>');
+        $tr.append('<td><button class="deleteButton btn btn-danger">Delete</button></td>');
         $tbody.append($tr); // appends row to table body
     } // end for
 } // end appendTasks
