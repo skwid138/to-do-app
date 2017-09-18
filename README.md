@@ -1,3 +1,16 @@
+## Instructions
+
+### Task Creation
+* enter at least a **Name** for task
+* if desired enter a **Description** and **Due Date**
+* click **Create Task**
+
+Tasks will show up in the order they are created with uncompleted tasks on top of the list.
+
+### Task Completion and Deletion
+* Upon completion click the **Complete button**
+* If a task needs to be removed click **Delete** and then **Delete** on the prompt
+
 ## Weekend Challenge #3
 
 Hello Primers!
